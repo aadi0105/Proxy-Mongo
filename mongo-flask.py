@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 
 mongo = pymongo.MongoClient("mongodb://ip-172-31-46-205.us-east-2.compute.internal:27017/")
-db = mongo.list
+db = mongo.User
 
 @app.route("/read", methods=["GET"])
 def get_user():
