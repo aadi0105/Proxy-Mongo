@@ -1,4 +1,4 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, request, make_response, jsonify
 import pymongo
 from bson.objectid import ObjectId
 import json
@@ -6,6 +6,18 @@ app = Flask(__name__)
 
 mongo = pymongo.MongoClient("mongodb://ip-172-31-46-205.us-east-2.compute.internal:27017/")
 db = mongo.User
+
+# status code errors
+@app.errorhandler(404)
+def hadle_404(_error):
+    """ reuturn a 404 status code"""
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+@app.errorhandler(500)
+def hadle_500(_error):
+    """ reuturn a 404 status code"""
+    return make_response(jsonify({'error': 'Internal server error'}), 500)
+
 
 @app.route("/read", methods=["GET"])
 def get_user():
